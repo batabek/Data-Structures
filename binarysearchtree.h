@@ -23,6 +23,9 @@ class BinarySearchTree {
   // #ofnodes found in the tree
   unsigned int n;
 
+  void insertItem(BinarySearchTreeNode<T>*& node, T value);
+  BinarySearchTreeNode<T>* searchItem(BinarySearchTreeNode<T>* node, T value);
+
   void deleteTree(BinarySearchTreeNode<T>* node) {
     if (node) {
       // delete children first then the node itself
@@ -35,16 +38,13 @@ class BinarySearchTree {
 
  public:
   BinarySearchTree() : root(nullptr), n(0) {}
-
   ~BinarySearchTree() {
     deleteTree(root);
     n = 0;
   }
 
   void insert(T value) { insertItem(root, value); }
-
-  void insertItem(BinarySearchTreeNode<T>*& node, T value);
-  BinarySearchTreeNode<T>* searchItem(T value);
+  BinarySearchTreeNode<T>* search(T value) { return searchItem(root, value); }
   void deleteItem(T value);
   BinarySearchTreeNode<T>* min();
   BinarySearchTreeNode<T>* max();
@@ -78,8 +78,17 @@ void BinarySearchTree<T>::insertItem(BinarySearchTreeNode<T>*& node, T value) {
 
 template <typename T>
 BinarySearchTree<T>::BinarySearchTreeNode<T>* BinarySearchTree<T>::searchItem(
-    T value) {
-  return nullptr;
+    BinarySearchTreeNode<T>* node, T value) {
+  // base case either hit to null link or found
+  if (node == nullptr)
+    return nullptr;
+  else if (value == node->data)
+    return node;
+
+  if (value < node->data)
+    return searchItem(node->left, value);
+  else if (value > node->data)
+    return searchItem(node->right, value);
 }
 
 template <typename T>
@@ -116,9 +125,33 @@ void BinarySearchTree<T>::postOrderWalk(BinarySearchTreeNode<T>* node,
 }
 
 template <typename T>
-BinarySearchTree<T>::BinarySearchTreeNode<T>* BinarySearchTree<T>::min() {}
+BinarySearchTree<T>::BinarySearchTreeNode<T>* BinarySearchTree<T>::min() {
+  BinarySearchTreeNode<T>* cur = getRoot();
+
+  // check for the null case first
+  if (cur) {
+    // traverse to the left
+    while (cur->left != nullptr) {
+      cur = cur->left;
+    }
+  }
+
+  return cur;
+}
 
 template <typename T>
-BinarySearchTree<T>::BinarySearchTreeNode<T>* BinarySearchTree<T>::max() {}
+BinarySearchTree<T>::BinarySearchTreeNode<T>* BinarySearchTree<T>::max() {
+  BinarySearchTreeNode<T>* cur = getRoot();
+
+  // check for the null case first
+  if (cur) {
+    // traverse to the right
+    while (cur->right != nullptr) {
+      cur = cur->right;
+    }
+  }
+
+  return cur;
+}
 
 #endif
