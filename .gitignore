@@ -1,0 +1,10 @@
+# Sublime project files
+DS.sublime-project
+DS.sublime-workspace
+
+# Build outputs
+*.o
+Makefile
+
+# Sample driver
+main*

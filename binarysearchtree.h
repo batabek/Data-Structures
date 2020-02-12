@@ -7,7 +7,6 @@
 // Simple BST with recursively implemented basic operations
 template <typename T>
 class BinarySearchTree {
-
   // Tree Node Template Class
   template <typename X>
   struct BinarySearchTreeNode {
@@ -38,10 +37,9 @@ class BinarySearchTree {
     root = nullptr;
   }
 
-void deleteNode(BinarySearchTreeNode<T>* &node, T val);
+  void deleteNode(BinarySearchTreeNode<T>*& node, T val);
 
  public:
-
   BinarySearchTree() : root(nullptr), n(0) {}
   ~BinarySearchTree() {
     deleteTree(root);
@@ -53,10 +51,9 @@ void deleteNode(BinarySearchTreeNode<T>* &node, T val);
   BinarySearchTreeNode<T>* search(T value) { return searchItem(root, value); }
   BinarySearchTreeNode<T>* findMin();
   BinarySearchTreeNode<T>* findMax();
-  
 
   bool isEmpty() const { return size() == 0; }
-  
+
   BinarySearchTreeNode<T>* getRoot() const { return root; }
 
   const unsigned int size() const { return n; }
@@ -74,42 +71,38 @@ void deleteNode(BinarySearchTreeNode<T>* &node, T val);
  * @brief      Function to delete a node by searching for its key.
  *              3 possible options to check
  *              a) if the node is a leaf node, then simply delete it
- *              b) if the node has a left/right child, replace its key with the child's
- *              c) if the node has both left and right child, replace its key with its successor.
- * @param      node  The node 
+ *              b) if the node has a left/right child, replace its key with the
+ * child's c) if the node has both left and right child, replace its key with
+ * its successor.
+ * @param      node  The node
  * @param[in]  val   The key of the node to be deleted
  */
 template <typename T>
-void BinarySearchTree<T>::deleteNode(BinarySearchTreeNode<T>* &node, T val) {
+void BinarySearchTree<T>::deleteNode(BinarySearchTreeNode<T>*& node, T val) {
+  // if there is no node nothing to delete
+  if (node == nullptr) {
+    return;
+  }
 
-    // if there is no node nothing to delete
-    if (node == nullptr) {
-      return;
-    } 
-
-    if (val < node->data) {
-       deleteNode(node->left, val); 
+  if (val < node->data) {
+    deleteNode(node->left, val);
+  } else if (val > node->data) {
+    deleteNode(node->right, val);
+  } else if (node->left != nullptr && node->right != nullptr) {
+    // find the successor of the right tree
+    BinarySearchTreeNode<T>* cur = node->right;
+    while (cur && cur->left != nullptr) {
+      cur = cur->left;
     }
-    else if (val > node->data) {
-        deleteNode(node->right, val);
-    }
-    else if (node->left != nullptr && node->right != nullptr) {
-
-        // find the successor of the right tree
-        BinarySearchTreeNode<T>* cur = node->right;
-        while (cur && cur->left!=nullptr) {
-          cur = cur->left;
-        }
-        // update node key with its successor
-        node->data = cur->data;
-        deleteNode(node->right, cur->data); 
-    }
-    else {
-      BinarySearchTreeNode<T>* temp = node;
-      node = ( node->left != nullptr ) ? node->left : node->right;
-      delete temp; n--;
-    }
-
+    // update node key with its successor
+    node->data = cur->data;
+    deleteNode(node->right, cur->data);
+  } else {
+    BinarySearchTreeNode<T>* temp = node;
+    node = (node->left != nullptr) ? node->left : node->right;
+    delete temp;
+    n--;
+  }
 }
 
 template <typename T>
