@@ -9,10 +9,15 @@ template <typename T>
 class BinarySearchTree {
   // Tree Node Template Class
   template <typename X>
-  struct BinarySearchTreeNode {
+  class BinarySearchTreeNode {
    public:
     BinarySearchTreeNode() : left(nullptr), right(nullptr) {}
     BinarySearchTreeNode(T val) : left(nullptr), right(nullptr), data(val) {}
+    BinarySearchTreeNode(const BinarySearchTreeNode<T> &node) {
+       data = node.data;
+       left = node.left;
+       right = node.right; 
+    }
 
     BinarySearchTreeNode* left;
     BinarySearchTreeNode* right;
