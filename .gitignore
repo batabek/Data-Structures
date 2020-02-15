@@ -5,6 +5,8 @@ DS.sublime-workspace
 # Build outputs
 *.o
 Makefile
+CMakeLists.txt
+build/
 
 # Sample driver
 main*
