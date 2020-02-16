@@ -10,3 +10,6 @@ build/
 
 # Sample driver
 main*
+
+# VS Code
+.vscode/

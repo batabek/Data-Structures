@@ -8,13 +8,13 @@ class SinglyNode {
  public:
   SinglyNode() : next(nullptr) {}
   SinglyNode(T item) : data(item), next(nullptr) {}
-  SinglyNode(const SinglyNode<T>& copy) {
+  SinglyNode(const SinglyNode<T> &copy) {
     data = copy.data;
     next = copy.next;
   }
 
   T data;
-  SinglyNode<T>* next;
+  SinglyNode<T> *next;
   // friend class SinglyList;
 };
 
@@ -33,24 +33,24 @@ class SinglyList : public LinkedList<T> {
   void DeleteAtFront() override;
   void DeleteAtBack() override;
   bool Search(T item) const override;
-  SinglyNode<T>* Search(T item);
+  SinglyNode<T> *Search(T item);
 
-  SinglyNode<T>* GetHead() const { return head; }
-  SinglyNode<T>* GetTail() const { return tail; }
+  SinglyNode<T> *GetHead() const { return head; }
+  SinglyNode<T> *GetTail() const { return tail; }
 
  private:
   // helper methods go here
   void DestroyList();
 
-  SinglyNode<T>* head;
-  SinglyNode<T>* tail;
+  SinglyNode<T> *head;
+  SinglyNode<T> *tail;
   size_t len;
 };
 
 template <class T>
 void SinglyList<T>::DestroyList() {
   while (head != nullptr) {
-    SinglyNode<T>* cur = head;
+    SinglyNode<T> *cur = head;
     head = head->next;
     delete cur;
     cur = nullptr;
@@ -65,7 +65,7 @@ void SinglyList<T>::InsertAtFront(T item) {
     len++;
     return;
   } else {
-    SinglyNode<T>* newNode = new SinglyNode<T>(item);
+    SinglyNode<T> *newNode = new SinglyNode<T>(item);
     newNode->next = head;
     head = newNode;
     len++;
@@ -82,7 +82,7 @@ void SinglyList<T>::InsertAtBack(T item) {
     return;
   }
 
-  SinglyNode<T>* newNode = new SinglyNode<T>(item);
+  SinglyNode<T> *newNode = new SinglyNode<T>(item);
   tail->next = newNode;
   tail = newNode;
   len++;
@@ -94,7 +94,7 @@ void SinglyList<T>::DeleteAtFront() {
     return;
   }
 
-  SinglyNode<T>* temp = head->next;
+  SinglyNode<T> *temp = head->next;
   delete head;
   head = temp;
   len--;
@@ -105,7 +105,7 @@ void SinglyList<T>::DeleteAtBack() {
   if (tail == nullptr) return;
 
   // find the predecessor of tail
-  SinglyNode<T>* cur = head;
+  SinglyNode<T> *cur = head;
   while (cur && cur->next != tail) {
     cur = cur->next;
   }
@@ -117,8 +117,8 @@ void SinglyList<T>::DeleteAtBack() {
 }
 
 template <class T>
-SinglyNode<T>* SinglyList<T>::Search(T item) {
-  SinglyNode<T>* cur = head;
+SinglyNode<T> *SinglyList<T>::Search(T item) {
+  SinglyNode<T> *cur = head;
   while (cur) {
     if (cur->data == item) {
       break;
@@ -132,7 +132,7 @@ SinglyNode<T>* SinglyList<T>::Search(T item) {
 template <class T>
 bool SinglyList<T>::Search(T item) const {
   bool found = false;
-  SinglyNode<T>* cur = head;
+  SinglyNode<T> *cur = head;
   while (cur) {
     if (cur->data == item) {
       found = true;
