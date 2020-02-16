@@ -1,0 +1,15 @@
+# Sublime project files
+DS.sublime-project
+DS.sublime-workspace
+
+# Build outputs
+*.o
+Makefile
+CMakeLists.txt
+build/
+
+# Sample driver
+main*
+
+# VS Code
+.vscode/
