@@ -1,8 +1,15 @@
 #ifndef SINGLY_LIST
 #define SINGLY_LIST
 
+#include "iterator.h"
 #include "linkedlist.h"
 
+/**
+ * @brief
+ * Template List Node class
+ *
+ * @tparam T type of the list node
+ */
 template <class T>
 class SinglyNode {
  public:
@@ -18,6 +25,52 @@ class SinglyNode {
   // friend class SinglyList;
 };
 
+/**
+ * @brief Singly List iterator
+ *
+ * @tparam Y type paramater
+ */
+template <class T>
+class SinglyListIterator : public Iterator<T> {
+ public:
+  SinglyListIterator(SinglyNode<T> *node) : node_cur_(node) {}
+  SinglyListIterator(const SinglyListIterator<T> &copy) {
+    this->node_cur_ = copy.node_cur_;
+  }
+
+  ~SinglyListIterator() {}
+
+  SinglyListIterator<T> &operator++() override {
+    node_cur_ = node_cur_->next;
+    return *this;
+  }
+
+  SinglyListIterator<T>& operator++(int) override {
+    node_cur_ = node_cur_->next;
+    return *this;
+  }
+
+  bool operator==(Iterator<T> &other) const override {
+    return node_cur_ == dynamic_cast<SinglyListIterator&>(other).node_cur_;
+  }
+
+  bool operator!=(Iterator<T> &other) const override {
+    return node_cur_ != dynamic_cast<SinglyListIterator&>(other).node_cur_;
+  }
+
+  T &operator*() const override { return node_cur_->data; }
+
+ private:
+  SinglyNode<T> *node_cur_;
+};
+
+
+
+/**
+ * @brief Template Linked List Class
+ *
+ * @tparam T type of the linked list
+ */
 template <class T>
 class SinglyList : public LinkedList<T> {
  public:
@@ -35,11 +88,16 @@ class SinglyList : public LinkedList<T> {
   bool Search(T item) const override;
   SinglyNode<T> *Search(T item);
 
+  // accessors
   SinglyNode<T> *GetHead() const { return head; }
   SinglyNode<T> *GetTail() const { return tail; }
 
+  // iterator related
+  SinglyListIterator<T> Begin() { return SinglyListIterator<T>(GetHead()); }
+  SinglyListIterator<T> End() { return SinglyListIterator<T>(GetTail()->next); }
+
  private:
-  // helper methods go here
+  // helper methods
   void DestroyList();
 
   SinglyNode<T> *head;
@@ -143,5 +201,6 @@ bool SinglyList<T>::Search(T item) const {
 
   return found;
 }
+
 
 #endif

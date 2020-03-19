@@ -1,6 +1,6 @@
-# C++ Data Structures
+C++ Data Structures
+=====================
 
----
 Some commonly used **template data structures** written from scratch in C++.
 
 * binarysearchtree.h : Binary Search Tree (BST) implementation.
