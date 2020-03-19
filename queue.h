@@ -3,6 +3,11 @@
 
 #include "singlylist.h"
 
+/**
+ * @brief Template Queue Container 
+ * 
+ * @tparam T Type parameter
+ */
 template <class T>
 class Queue {
  public:

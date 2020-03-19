@@ -3,6 +3,11 @@
 
 #include "singlylist.h"
 
+/**
+ * @brief Template Stack Data Structure 
+ * 
+ * @tparam T Type parameter
+ */
 template <class T>
 class Stack {
  public:
