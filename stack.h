@@ -4,7 +4,7 @@
 #include "singlylist.h"
 
 /**
- * @brief Template Stack Data Structure 
+ * @brief Template Stack Container
  * 
  * @tparam T Type parameter
  */
@@ -15,14 +15,32 @@ class Stack {
   Stack(const Stack& copy) { container = copy.container; }
 
   ~Stack() { delete container; }
-
+  /**
+   * @brief Add item to the stack
+   * 
+   * @param item item to add
+   */
   void Push(T item) { container->InsertAtBack(item); }
 
+  /**
+   * @brief Remove an item from the stack
+   * 
+   */
   void Pop() { container->DeleteAtBack(); }
 
+  /**
+   * @brief Get the item at the top of the stack
+   * 
+   * @return T type of the item
+   */
   T Peek() { return container->GetTail()->data; }
 
-  size_t GetSize() const { return container->GetSize(); }
+  /**
+   * @brief Get the Size object
+   * 
+   * @return size_t number of items in the stack
+   */
+  size_t Size() const { return container->Size(); }
 
  private:
   // using linked list implementation for the underlying container

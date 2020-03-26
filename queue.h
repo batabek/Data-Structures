@@ -15,14 +15,33 @@ class Queue {
   Queue(const Queue& copy) { container = copy.container; }
 
   ~Queue() { delete container; }
-
+  
+  /**
+   * @brief add item to the queue
+   * 
+   * @param item item to add 
+   */
   void Enqueue(T item) { container->InsertAtBack(item); }
 
+  /**
+   * @brief remove an item from the queue (i.e. front)
+   * 
+   */
   void Dequeue() { container->DeleteAtFront()(); }
 
-  T Peek() { return container->GetTail()->data; }
+  /**
+   * @brief Get the item from the head of the queue
+   * 
+   * @return T 
+   */
+  T Peek() { return container->GetHead()->data; }
 
-  size_t GetSize() const { return container->GetSize(); }
+  /**
+   * @brief Returns the Size of the queue
+   * 
+   * @return size_t number of items in the queue
+   */
+  size_t Size() const { return container->Size(); }
 
  private:
   // using linked list implementation for the underlying container

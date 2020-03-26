@@ -5,8 +5,7 @@
 #include "linkedlist.h"
 
 /**
- * @brief
- * Template List Node class
+ * @brief Template List Node class
  *
  * @tparam T type of the list node
  */
@@ -28,7 +27,7 @@ class SinglyNode {
 /**
  * @brief Singly List iterator
  *
- * @tparam Y type paramater
+ * @tparam Y type parameter
  */
 template <class T>
 class SinglyListIterator : public Iterator<T> {
@@ -40,11 +39,21 @@ class SinglyListIterator : public Iterator<T> {
 
   ~SinglyListIterator() {}
 
+  /**
+   * @brief overloaded increment operator
+   *        points to the next element in the list  
+   * @return SinglyListIterator<T>& 
+   */
   SinglyListIterator<T> &operator++() override {
     node_cur_ = node_cur_->next;
     return *this;
   }
 
+  /**
+   * @brief overloaded increment operator
+   * 
+   * @return SinglyListIterator<T>& 
+   */
   SinglyListIterator<T>& operator++(int) override {
     node_cur_ = node_cur_->next;
     return *this;
@@ -80,24 +89,89 @@ class SinglyList : public LinkedList<T> {
     head = tail = nullptr;
   }
 
+  /**
+   * @brief Return the size of the list
+   * 
+   * @return size_t number of elements in the list
+   */
   size_t Size() const override { return len; }
+
+  /**
+   * @brief Insert the item at the front(head) of the list
+   * 
+   * @param item item to insert at front 
+   */
   void InsertAtFront(T item) override;
+
+  /**
+   * @brief Insert the item at the back(tail) of the list
+   * 
+   * @param item item to insert at the front
+   */
   void InsertAtBack(T item) override;
+
+  /**
+   * @brief Delete an item from the fron of the list
+   * 
+   */
   void DeleteAtFront() override;
+
+  /**
+   * @brief Delete an item from the back of the list
+   * 
+   */
   void DeleteAtBack() override;
+
+  /**
+   * @brief Searches the item in the list
+   * 
+   * @param item item to search for in the list
+   * @return true if the item is found
+   * @return false if the item is not found
+   */
   bool Search(T item) const override;
+  
+  /**
+   * @brief Searches the item in the list
+   * 
+   * @param item item to search for in the list
+   * @return SinglyNode<T>* returns the found item if found, nullptr otherwise
+   */
   SinglyNode<T> *Search(T item);
 
-  // accessors
+  /**
+   * @brief Get the Head pointer of the list
+   * 
+   * @return SinglyNode<T>* returns a node pointer to head
+   */
   SinglyNode<T> *GetHead() const { return head; }
+
+  /**
+   * @brief Get the Tail pointer of the list
+   * 
+   * @return SinglyNode<T>* returns a node pointer to the tail 
+   */
   SinglyNode<T> *GetTail() const { return tail; }
 
-  // iterator related
+  /**
+   * @brief Get a list iterator to the beginning of the list
+   * 
+   * @return SinglyListIterator<T> 
+   */
   SinglyListIterator<T> Begin() { return SinglyListIterator<T>(GetHead()); }
+  
+  /**
+   * @brief Get a list iterator to the end of the list
+   * 
+   * @return SinglyListIterator<T> 
+   */
   SinglyListIterator<T> End() { return SinglyListIterator<T>(GetTail()->next); }
 
  private:
-  // helper methods
+  /**
+   * @brief Helper method to release allocated nodes of the list
+   * 
+   */
   void DestroyList();
 
   SinglyNode<T> *head;
@@ -135,12 +209,14 @@ void SinglyList<T>::InsertAtBack(T item) {
   // both head & tails point to the null
   if (head == nullptr && tail == nullptr) {
     head = new SinglyNode<T>(item);
+    head->next = nullptr;
     tail = head;
     len++;
     return;
   }
 
   SinglyNode<T> *newNode = new SinglyNode<T>(item);
+  newNode->next = nullptr;
   tail->next = newNode;
   tail = newNode;
   len++;
@@ -162,16 +238,23 @@ template <class T>
 void SinglyList<T>::DeleteAtBack() {
   if (tail == nullptr) return;
 
-  // find the predecessor of tail
-  SinglyNode<T> *cur = head;
-  while (cur && cur->next != tail) {
-    cur = cur->next;
-  }
+  if (head != tail) {
+    // find the predecessor of tail
+    SinglyNode<T> *cur = head;
+    while (cur && cur->next != tail) {
+      cur = cur->next;
+    }
 
-  delete tail;
-  cur->next = nullptr;
-  tail = cur;
-  len--;
+    delete tail;
+    cur->next = nullptr;
+    tail = cur;
+    len--;
+  }
+  else {
+    delete tail;
+    head = tail = nullptr;
+    len--;
+  }
 }
 
 template <class T>
