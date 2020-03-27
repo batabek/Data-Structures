@@ -9,14 +9,6 @@ TEST(SinglyListTest, Constructor) {
   EXPECT_EQ(list.Size(), 0);
 }
 
-TEST(SinglyListTest, DISABLED_Destructor) {
-  SinglyList<int> *list = new SinglyList<int>();
-  ASSERT_TRUE(list);
-
-  delete list;
-  ASSERT_FALSE(list);
-}
-
 TEST(SinglyListTest, EmptyList) {
   SinglyList<int> list;
   EXPECT_EQ(list.Size(), 0);

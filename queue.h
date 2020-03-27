@@ -27,7 +27,7 @@ class Queue {
    * @brief remove an item from the queue (i.e. front)
    * 
    */
-  void Dequeue() { container->DeleteAtFront()(); }
+  void Dequeue() { container->DeleteAtFront(); }
 
   /**
    * @brief Get the item from the head of the queue
