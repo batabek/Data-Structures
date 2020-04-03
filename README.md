@@ -17,4 +17,6 @@ Some commonly used **template data structures** written from scratch in C++.
 * queue.h: Queue data structure implementation using link list.
 
 * iterator.h : Base class for iterator types.
-	* SinglyListIterator: Iterator class for using with singly linked list. 
+	* SinglyListIterator: Iterator class for using with singly linked list.
+
+* test: folder containing the unit tests for each data structure. 
