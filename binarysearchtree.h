@@ -4,6 +4,8 @@
 #include <functional>
 #include <iostream>
 
+#include "stack.h"
+
 // Simple BST with recursively implemented basic operations
 template <typename T>
 class BinarySearchTree {
@@ -13,10 +15,10 @@ class BinarySearchTree {
    public:
     BinarySearchTreeNode() : left(nullptr), right(nullptr) {}
     BinarySearchTreeNode(T val) : left(nullptr), right(nullptr), data(val) {}
-    BinarySearchTreeNode(const BinarySearchTreeNode<T> &node) {
-       data = node.data;
-       left = node.left;
-       right = node.right; 
+    BinarySearchTreeNode(const BinarySearchTreeNode<T>& node) {
+      data = node.data;
+      left = node.left;
+      right = node.right;
     }
 
     BinarySearchTreeNode* left;
@@ -66,6 +68,10 @@ class BinarySearchTree {
   // Traversals
   void inOrderWalk(BinarySearchTreeNode<T>* node,
                    std::function<void(T val)> nodefunc);
+
+  // iterative inorderwalk
+  void inOrderWalk(std::function<void(T val)> nodefunc);
+
   void preOrderWalk(BinarySearchTreeNode<T>* node,
                     std::function<void(T val)> nodefunc);
   void postOrderWalk(BinarySearchTreeNode<T>* node,
@@ -147,6 +153,29 @@ void BinarySearchTree<T>::inOrderWalk(BinarySearchTreeNode<T>* node,
     inOrderWalk(node->left, nodefunc);
     nodefunc(node->data);
     inOrderWalk(node->right, nodefunc);
+  }
+}
+
+template <typename T>
+void BinarySearchTree<T>::inOrderWalk(std::function<void(T val)> nodefunc) {
+  Stack<BinarySearchTreeNode<T>*> stack;
+  BinarySearchTreeNode<T>* cur = this->root;
+  bool done = false;
+
+  while (!done) {
+    if (cur != nullptr) {
+      stack.Push(cur);
+      cur = cur->left;
+    } else {
+      if (stack.Size() > 0) {
+        cur = stack.Peek();
+        stack.Pop();
+        nodefunc(cur->data);
+        cur = cur->right;
+      } else {
+        done = true;
+      }
+    }
   }
 }
 
