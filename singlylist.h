@@ -97,6 +97,14 @@ class SinglyList : public LinkedList<T> {
   size_t Size() const override { return len; }
 
   /**
+   * @brief Checks for the empty
+   * 
+   * @return true if the size greater than 0
+   * @return false otherwise
+   */
+  bool IsEmpty() { return Size() == 0 ? true : false; }
+
+  /**
    * @brief Insert the item at the front(head) of the list
    * 
    * @param item item to insert at front 

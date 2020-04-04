@@ -5,7 +5,7 @@
 
 /**
  * @brief Template Stack Container
- * 
+ *
  * @tparam T Type parameter
  */
 template <class T>
@@ -17,30 +17,38 @@ class Stack {
   ~Stack() { delete container; }
   /**
    * @brief Add item to the stack
-   * 
+   *
    * @param item item to add
    */
   void Push(T item) { container->InsertAtBack(item); }
 
   /**
    * @brief Remove an item from the stack
-   * 
+   *
    */
   void Pop() { container->DeleteAtBack(); }
 
   /**
    * @brief Get the item at the top of the stack
-   * 
+   *
    * @return T type of the item
    */
   T Peek() { return container->GetTail()->data; }
 
   /**
    * @brief Get the Size object
-   * 
+   *
    * @return size_t number of items in the stack
    */
   size_t Size() const { return container->Size(); }
+
+  /**
+   * @brief Checks for the empty
+   *
+   * @return true if the size greater than 0
+   * @return false otherwise
+   */
+  bool IsEmpty() { return Size() == 0 ? true : false; }
 
  private:
   // using linked list implementation for the underlying container

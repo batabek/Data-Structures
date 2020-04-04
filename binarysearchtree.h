@@ -167,7 +167,7 @@ void BinarySearchTree<T>::inOrderWalk(std::function<void(T val)> nodefunc) {
       stack.Push(cur);
       cur = cur->left;
     } else {
-      if (stack.Size() > 0) {
+      if (!stack.IsEmpty()) {
         cur = stack.Peek();
         stack.Pop();
         nodefunc(cur->data);
