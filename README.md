@@ -5,9 +5,10 @@ Some commonly used **template data structures** written from scratch in C++.
 
 * binarysearchtree.h : Binary Search Tree (BST) implementation.
 	* DFS Traversal methods including inorder, preorder, postorder
-	* insertion(recursive)
+	* insertion(both recursive and  iterative)
 	* deletion(recursive)
 	* search(recursive)
+	* find min/max
 
 * linklist.h: Base class for List types.
 	* singlylist.h: Singly Linked List implementation. 
