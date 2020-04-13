@@ -32,6 +32,9 @@ class BinarySearchTree {
   unsigned int n;
 
   void insertItem(BinarySearchTreeNode<T>*& node, T value);
+  // iterative insert func.
+  void insertItem(T value);
+
   BinarySearchTreeNode<T>* searchItem(BinarySearchTreeNode<T>* node, T value);
 
   void deleteTree(BinarySearchTreeNode<T>* node) {
@@ -53,7 +56,7 @@ class BinarySearchTree {
     n = 0;
   }
 
-  void insert(T value) { insertItem(root, value); }
+  void insert(T value) { insertItem(value); /*insertItem(root, value);*/ }
   void deleteItem(T value) { deleteNode(root, value); }
   BinarySearchTreeNode<T>* search(T value) { return searchItem(root, value); }
   BinarySearchTreeNode<T>* findMin();
@@ -225,6 +228,35 @@ BinarySearchTree<T>::BinarySearchTreeNode<T>* BinarySearchTree<T>::findMax() {
     }
   }
   return cur;
+}
+
+template <typename T>
+void BinarySearchTree<T>::insertItem(T value) {
+  BinarySearchTreeNode<T>*cur = getRoot(), *parent = nullptr;
+
+  // find a proper leaf node to insert the new node
+  while (cur) {
+    parent = cur;
+    if (value >= cur->data) {
+      cur = cur->right;
+    } else {
+      cur = cur->left;
+    }
+  }
+
+  // empty tree case
+  if (parent == nullptr) {
+    root = new BinarySearchTreeNode<T>(value);
+  } else if (value < parent->data) {
+    // attach to the left child of parent
+    parent->left = new BinarySearchTreeNode<T>(value);
+  } else {
+    // attach to the right child of parent
+    parent->right = new BinarySearchTreeNode<T>(value);
+  }
+
+  // increment element count
+  n++;
 }
 
 #endif
